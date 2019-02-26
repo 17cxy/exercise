@@ -1,0 +1,145 @@
+1
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null){
+            return 0;
+        }else if (root.left == null && root.right == null){
+            return 1;
+        }
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return left>right?left+1:right+1;
+
+    }
+}
+
+2
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+         if (root == null) return true;
+        return valid(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+    public static boolean valid(TreeNode root, long low, long high) {
+        if (root == null) return true;
+        if (root.val <= low || root.val >= high) return false;
+        return valid(root.left, low, root.val) && valid(root.right, root.val, high);
+
+    }
+}
+
+3
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+         public boolean isSymmetric(TreeNode root) {
+            if(root == null){
+                return true;
+            }
+
+            return symmetric(root.left,root.right);
+        }
+        private boolean symmetric(TreeNode left,TreeNode right){
+            if(left == null && right == null) return true;
+            if(left == null || right == null) return false;
+            return (left.val==right.val)&&symmetric(left.left,right.right)&&symmetric(left.right,right.left);
+        }
+
+
+    
+}
+
+4
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    
+        List<List<Integer>> res=new ArrayList();
+    public List<List<Integer>> levelOrder(TreeNode root) {
+       if(root==null)return res;                          
+       
+        Queue<TreeNode> q=new LinkedList();           
+        q.add(root);                                
+        while(!q.isEmpty()){                     
+            int count=q.size();     
+             List<Integer> list=new ArrayList();
+            while(count>0){                             
+                TreeNode temp=q.peek();
+                q.poll();                                   
+                list.add(temp.val);
+                if(temp.left!=null)q.add(temp.left);     
+                if(temp.right!=null)q.add(temp.right);
+                count--;
+            }
+            res.add(list);
+        }
+        return res;
+    }
+}
+
+5
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public static TreeNode sortedArrayToBST(int[] nums) {
+        if (nums == null){
+            return null;
+        }
+ 
+        TreeNode root = core(nums,0,nums.length-1);
+        return root;
+    }
+    public static TreeNode core(int[] nums,int start,int end){
+        if (start>end){
+            return null;
+        }else if (start == end){
+            return new TreeNode(nums[start]);
+        }
+        int middle = (end-start+1)/2+start;
+        TreeNode root = new TreeNode(nums[middle]);
+        TreeNode left = core(nums,start,middle-1);
+        TreeNode right = core(nums,middle+1,end);
+        root.left = left;
+        root.right = right;
+        return root;
+    }
+
+}

@@ -1,0 +1,141 @@
+1
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+          int start = 1;
+        int count = 0;
+        int num = 0;
+        while (count<=31){
+            if ((start&n) == start ){
+                num++;
+            }
+            start = start<<1;
+            count++;
+        }
+        return num;
+
+    }
+}
+
+2
+class Solution {
+    public int hammingDistance(int x, int y) {
+         if (x<0||y<0){
+            return -1;
+        }
+        int yihuo = x^y;
+        int start = 1;
+        int count = 0;
+        int sum = 0;
+        while (count<=31){
+            if ((start&yihuo) == start){
+                sum++;
+            }
+            start = start<<1;
+            count++;
+        }
+        return sum;
+
+    }
+}
+
+3
+public class Solution {
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        int ans = 0;
+        for (int x = 0;x<=31;x++){
+            ans = ans <<1;
+            if ((n&1) == 1){
+                ans += 1;
+            }
+            n = n>>1;
+        }
+        return ans;
+
+    }
+}
+
+4
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+       List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> list = new ArrayList<Integer>();
+            for (int j = 0; j <= i; j++) {
+                if (j == 0 || j == i )
+                    list.add(1);
+                else
+                    list.add(ans.get(i - 1).get(j) + ans.get(i - 1).get(j - 1));
+            }
+            ans.add(list);
+        }
+        return ans;
+
+    }
+}
+
+5
+class Solution {
+    public static boolean isValid(String s) {
+        if (s == null || s.length() == 0){
+            return true;
+        }
+        Stack<Character> stack = new Stack<>();
+        for (char x :s.toCharArray()){
+            if (x == '(' || x == '[' || x =='{'){
+                stack.push(x);
+            }
+            if (x == ')'){
+                if (stack.size() == 0){
+                    return false;
+                }
+                char temp = stack.pop();
+                if (temp!='('){
+                    return false;
+                }
+            }
+            if (x == ']'){
+                if (stack.size() == 0){
+                    return false;
+                }
+                char temp = stack.pop();
+                if (temp!='['){
+                    return false;
+                }
+            }
+            if (x == '}'){
+                if (stack.size() == 0){
+                    return false;
+                }
+                char temp = stack.pop();
+                if (temp!='{'){
+                    return false;
+                }
+            }
+ 
+        }
+        if (stack.size()!=0){
+            return false;
+        }
+        return true;
+    }
+
+}
+
+6
+class Solution {
+    public int missingNumber(int[] nums) {
+        if (nums == null||nums.length == 0){
+            return -1;
+        }
+        int sum = (0+nums.length)*(nums.length+1)/2;
+        int nowsum = 0;
+        for (int x:nums){
+            nowsum += x;
+        }
+        return sum - nowsum;
+
+    }
+}

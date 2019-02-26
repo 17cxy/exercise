@@ -1,0 +1,84 @@
+1
+class Solution {
+
+    private int[] origin;
+    public Solution(int[] nums) {
+        origin = nums;
+
+    }
+    
+    /** Resets the array to its original configuration and return it. */
+    public int[] reset() {
+        return this.origin;
+        
+    }
+    
+    /** Returns a random shuffling of the array. */
+    public int[] shuffle() {
+          int length = origin.length;
+        int[] order = new int[length];
+ 
+        int num;
+        int count = 0;
+        boolean flag = false;
+        while (count<length){
+            Random dom = new Random();
+            num = Math.abs(dom.nextInt())%(length);
+            for (int x = 0;x<=count-1;x++){
+                if (order[x] == num){
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == false){
+                count++;
+                order[count-1] = num;
+            }
+            flag = false;
+        }
+ 
+        for (int x = 0;x<=order.length-1;x++){
+            order[x] = this.origin[order[x]];
+        }
+        return order;
+
+    }
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(nums);
+ * int[] param_1 = obj.reset();
+ * int[] param_2 = obj.shuffle();
+ */
+
+2
+public class MinStack {
+    private int min_val = Integer.MAX_VALUE;
+    private Stack<Integer> s = new Stack<>();
+     
+    /** initialize your data structure here. */
+    public MinStack() {}
+     
+    public void push(int x) {
+        if (x <= min_val) {
+            s.push(min_val);
+            min_val = x;
+        }
+        s.push(x);
+    }
+     
+    public void pop() {
+        if (s.pop() == min_val) min_val = s.pop();
+    }
+     
+    public int top() {
+        return s.peek();
+    }
+     
+    public int getMin() {
+        return min_val;
+    }
+}
+
+3

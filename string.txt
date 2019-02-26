@@ -1,0 +1,211 @@
+1
+class Solution {
+    public String reverseString(String s) {
+        return new StringBuilder(s).reverse().toString();
+    }
+}
+
+2
+class Solution {
+    public int reverse(int x) {
+         long result=0;
+ while(x!=0){
+	 result=result*10+x%10;
+	 x/=10;
+ }
+ if(result>Integer.MAX_VALUE||result<Integer.MIN_VALUE)
+	 result=0;
+ return(int)result;
+
+    }
+}
+
+3
+class Solution {
+    public int firstUniqChar(String s) {
+  
+ Map<Character,Integer> map = new LinkedHashMap<Character,Integer>();
+            char[] arr = s.toCharArray();
+            for(int i =0;i<arr.length;i++){
+                if(!map.containsKey(arr[i])){
+                    map.put(arr[i],i);
+                }else{
+                    map.put(arr[i],-1);
+                }
+            }
+            for(Map.Entry<Character,Integer> entry :map.entrySet()){
+                if(entry.getValue()!=-1){
+                    return entry.getValue();
+                }
+            }
+            return -1;
+
+    }
+}
+
+4
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        
+        char[] arrs = s.toCharArray();
+    	char[] arrt = t.toCharArray();
+    	
+    	
+    	Arrays.sort(arrs);
+    	Arrays.sort(arrt);
+    	
+    	if (new String(arrs).equals(new String(arrt))){
+    		return true;
+    	}
+    	
+    	
+        return false;
+    }
+}
+
+5
+class Solution {
+    public boolean isPalindrome(String s) {
+        if(s==null||s.length()==0){
+				return true;
+			}
+			s=s.toLowerCase();
+			StringBuffer result=new StringBuffer();
+			for(int i=0;i<s.length();i++){
+				if((s.charAt(i)>='a'&&s.charAt(i)<='z' )||(s.charAt(i)>='0'&&s.charAt(i)<='9'))
+					result.append(s.charAt(i));
+			}
+			if(result.length()==0){
+                return true;
+            }
+			int start=0;
+			int end=result.length()-1;
+			while(start<end){
+				if (result.charAt(start)!=result.charAt(end))
+                    return false;
+                else{
+                    start++;
+                    end--;
+                }
+			}
+            return true;
+    }
+}
+
+6
+class Solution {
+    public int myAtoi(String str) {
+      
+    str = str.trim();
+    if (str.isEmpty()) return 0;
+ 
+    int sign = 1;
+ 
+    int base = 0;
+ 
+    int i = 0;
+ 
+    if (str.charAt(i) == '-' || str.charAt(i) == '+')
+        sign = str.charAt(i++) == '-' ? -1 : 1;
+ 
+    while (i < str.length() && str.charAt(i) >= '0' && str.charAt(i) <= '9') { 
+        // 如果base > MAX_VALUE/10，那么base*10 + new_value > base*10 > MAX_VALUE，这种情况下就会发生溢出。
+        // 若base == INT_MAX/10，而且new_value = str.charAt(i++) - '0'`大于`7`，也会发生溢出。因为MAX_VALUE = 2147483647
+        if (base > Integer.MAX_VALUE / 10 || (base == Integer.MAX_VALUE / 10 && str.charAt(i) - '0' > 7)) {
+            return (sign == 1) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+        }
+ 
+        base = 10 * base + (str.charAt(i++) - '0');
+    }
+ 
+    return base * sign;
+    }
+}
+
+7
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(needle.length()==0)
+            return 0;
+        int length=haystack.length();
+        int length_s=needle.length();
+       
+  //      if(length<length_s)
+    //        return -1;
+        if(length>=length_s){
+        int p=haystack.indexOf(needle);
+        if(p>=0){
+        return p;
+        }
+       else
+            return -1;
+    }else
+        
+        return -1;
+}
+}
+
+8
+class Solution {
+    public static String countAndSay(int n) {
+        if (n<=0){
+            return "";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        if (n == 1){
+            stringBuilder.append("1");
+            return stringBuilder.toString();
+        }
+        stringBuilder.append("1");
+        while (n > 1){
+            char[] temp = stringBuilder.toString().toCharArray();
+            stringBuilder.delete(0,stringBuilder.length());
+ 
+            int count = 1;
+            if (temp.length == 1){
+                stringBuilder.append(1);
+                stringBuilder.append(temp[0]);
+            }
+            for (int x = 0;x<=temp.length-2;x++){
+                if (temp[x] == temp[x+1]){
+                    count++;
+                    if (x == temp.length-2){
+                        stringBuilder.append(count);
+                        stringBuilder.append(temp[x]);
+                        count = 1;
+                    }
+                }else {
+                    stringBuilder.append(count);
+                    stringBuilder.append(temp[x]);
+                    count = 1;
+                }
+            }
+            if (temp.length>=2 && temp[temp.length-1] != temp[temp.length-2]){
+                stringBuilder.append(1);
+                stringBuilder.append(temp[temp.length-1]);
+            }
+            n = n-1;
+        }
+        return stringBuilder.toString();
+    }
+
+}
+
+9
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+      if (strs == null || strs.length == 0) return "";
+        StringBuffer res = new StringBuffer();
+        
+        Arrays.sort(strs);
+        String s1 = strs[0], s2 = strs[strs.length - 1];
+        for (int i = 0; i < s1.length(); i++) {
+            if (s2.length() > i && s2.charAt(i) == s1.charAt(i))
+                res.append(s1.charAt(i));
+            else return res.toString();
+        }
+        return res.toString();
+    }
+
+    
+}

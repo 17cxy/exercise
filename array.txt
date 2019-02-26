@@ -1,0 +1,249 @@
+1
+class Solution {
+    public int removeDuplicates(int[] nums) {
+         int ans = 1;
+        for(int i = 1 ; i < nums.length; i ++) { 
+            if(nums[i] == nums[i-1]) continue;
+            nums[ans++] = nums[i];
+        }
+        return ans;
+
+    }
+}
+
+2
+class Solution {
+    
+public static int maxProfit(int[] prices) {
+        if (prices == null || prices.length <= 1){
+            return 0;
+        }
+        int days = prices.length;
+        int[] price_day = new int[days];
+        price_day[days-1] = 0;
+        for (int x = days-2;x>=0;x--){
+            int max = 0;
+            for (int y = x+1;y<=days-1;y++){
+                if (prices[y] > prices[x]){
+                    int temp = prices[y] - prices[x];
+                    if (y<= days-2){
+                        temp += price_day[y+1];
+                    }
+                    if (temp > max){
+                        max = temp;
+                    }
+                }
+            }
+            //如果最大值比当天不买还小,取当天不买
+            if (max<price_day[x+1]){
+                price_day[x] = price_day[x+1];
+            }else {
+                price_day[x] = max;
+            }
+        }
+        int maxprice = 0;
+        for (int x:price_day){
+            if (x>maxprice){
+                maxprice = x;
+            }
+        }
+        return maxprice;
+    }
+
+    
+}
+
+3
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int[]res = nums.clone();
+        
+        for (int i = 0; i < nums.length; ++i) {
+            nums[(i + k) % nums.length] = res[i];
+        }
+        
+    }
+}
+
+4
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        
+ Arrays.sort(nums);
+ 
+for(int i=0;i<nums.length-1;i++){
+   
+	   if(nums[i]==nums[i+1]){
+		   return true;
+		   
+	   }
+   }
+   return false;
+
+    }
+}
+
+5
+class Solution {
+    public int singleNumber(int[] nums) {
+        
+ Arrays.sort(nums);
+ 
+for(int i=0;i<nums.length-1;i+=2){
+   
+	   if(nums[i]!=nums[i+1]){
+		   
+		   return nums[i];
+	   }
+   }
+    return nums[nums.length-1];
+    }
+}
+
+6
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+                int[] reback = {};
+        if (nums1 == null || nums2 == null ){
+            return reback;
+        }
+        List<Integer> temp = new ArrayList<>();
+
+ Arrays.sort(nums1);
+ Arrays.sort(nums2);
+ 
+ 
+ int start = 0;
+        for (int x : nums2){
+            for (int y = start;y<=nums1.length-1;y++){
+                if (nums1[y] == x){
+                    temp.add(x);
+                    start = y+1;
+                    break;
+                }
+            }
+        }
+ 
+        if (temp.size() == 0){
+            return reback;
+        }
+        reback = new int[temp.size()];
+        for (int x = 0;x<=reback.length-1;x++){
+            reback[x] = temp.get(x);
+        }
+        return reback;
+    }
+}
+
+7
+class Solution {
+    public int[] plusOne(int[] digits) {
+       int n= digits.length;
+        for(int i=n-1;i>=0;i--){
+       if (digits[i]<9){
+	      digits[i]+=1;
+          return digits;
+       }
+        digits[i]=0;
+            }     
+            
+        int[] result=new int[digits.length+1];
+        result[0]=1;
+        return result;
+    
+}
+}
+
+8
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int ans=0;
+        int n=0;
+        for(int i=0;i<nums.length;i++){
+           if(nums[i]==0) {
+               n++;
+               continue;}
+            nums[ans++] = nums[i];
+            
+           }
+        
+        for(int j=nums.length-n ;j<nums.length;j++){
+            nums[j]=0;
+        }
+    }
+}
+
+
+9
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+          int[] reback = {};
+        if (nums == null || nums.length < 2){
+            return reback;
+        }
+
+ 
+        for (int x  = 0;x<=nums.length-2;x++){
+            for (int y = x+1;y<=nums.length-1;y++){
+                if ((nums[y]+nums[x]) == target){
+                    reback= new int[2];
+					reback[0]=x;
+					reback[1]=y;
+                }
+            }
+        }
+		return reback;
+    }
+}
+
+10
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        boolean markrow[][]=new boolean[9][10];
+        boolean markcol[][]=new boolean[9][10];
+        boolean markblock[][]=new boolean[9][10];
+        for(int i=0;i<9;i++)
+            for(int j=0;j<9;j++){
+                int index=i/3*3+j/3;
+                if(board[j][i]!='.'){
+                    int temp=board[j][i]-'0';
+                    if(markrow[j][temp])return false;
+                    else markrow[j][temp]=true;
+                    if(markcol[i][temp])return false;
+                    else markcol[i][temp]=true;
+                    if(markblock[index][temp])return false;
+                    else markblock[index][temp]=true;
+                }
+            }
+            return true;
+    }
+}
+
+11
+class Solution {
+    public static void rotate(int[][] matrix) {
+         if (matrix == null || matrix.length == 0 || matrix[0].length == 0 || matrix.length != matrix[0].length){
+             return;
+         }
+         int row = matrix.length;
+         //沿对角线交换
+         for (int x = 0;x<=row-2;x++){
+             for (int y = row-x-2;y>=0;y--){
+                 swamp(matrix,x,y,row-1-y,row-1-x);
+             }
+         }
+         //沿中轴交换
+        int middle = (row-1)/2;
+         for (int x = 0;x<=middle;x++){
+             for (int y = 0;y<=row-1;y++){
+                 swamp(matrix,x,y,row-1-x,y);
+             }
+         }
+    }
+    public static void swamp(int[][] matrix,int x1,int y1,int x2,int y2){
+        int temp = matrix[x1][y1];
+        matrix[x1][y1] = matrix[x2][y2];
+        matrix[x2][y2] = temp;
+    }
+
+}

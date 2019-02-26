@@ -1,0 +1,91 @@
+1
+class Solution {
+    public int climbStairs(int n) {
+         if(n==1)
+             return 1;
+        int sum[]=new int[1000];
+        sum[0]=0;
+        sum[1]=1;
+        sum[2]=2;
+        
+     for(int i=3;i<=n;i++){
+         sum[i]=sum[i-2]+sum[i-1];
+     }
+        return sum[n];  
+    }
+}
+
+2
+class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length <=1){
+            return 0;
+        }
+        int[] lowprice = new int[prices.length];
+        lowprice[0] = prices[0];
+        for (int x = 1;x<=prices.length-1;x++){
+            lowprice[x] = lowprice[x-1] > prices[x-1] ? prices[x-1]:lowprice[x-1];
+        }
+        int maxprofit = 0;
+        for (int x = 0;x<=prices.length-1;x++){
+            if (prices[x]-lowprice[x]>maxprofit){
+                maxprofit = prices[x]-lowprice[x];
+            }
+        }
+        return maxprofit;
+    }
+}
+
+3
+class Solution {
+    public int maxSubArray(int[] nums) {
+         if (nums == null || nums.length == 0) {
+            return 0;
+        }else if (nums.length == 1){
+            return nums[0];
+        }
+        int sum = 0;
+        int max = nums[0];
+        for (int x = 0; x<=nums.length-1;x++){
+            sum = sum+nums[x];
+            if (sum>max){
+                max = sum;
+            }
+            if (sum < 0){
+                sum = 0;
+            }
+        }
+        return max;
+
+    }
+}
+
+4
+class Solution {
+    public int rob(int[] nums) {
+         if (nums == null || nums.length == 0) {
+            return 0;
+        }else if (nums.length == 1){
+            return nums[0];
+        }
+       int[] profits = new int[nums.length];
+        profits[0] = nums[0];
+        profits[1] = nums[1];
+        if (nums.length == 2){
+            return Math.max(profits[0],profits[1]);
+        }
+        for (int x = 2;x<=nums.length-1;x++){
+            int max = 0;
+            for (int y = 0;y<=x-2;y++){
+                if (profits[y] > max){
+                    max = profits[y];
+                }
+            }
+            profits[x] = Math.max(max+nums[x],profits[x-1]);
+        }
+        
+        return profits[nums.length-1];
+
+    }
+}
+

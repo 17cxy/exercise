@@ -1,0 +1,181 @@
+1
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void deleteNode(ListNode node) {
+        if(node==null||node.next==null){
+	return;
+}
+node.val=node.next.val;
+node.next=node.next.next;
+    }
+}
+
+2
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+         ListNode right = head;
+        ListNode left = head;
+        for (int i = 0; i < n; i++) {
+            right = right.next;
+        }
+        //首节点
+        if (right == null) {
+            head = head.next;
+            return head;
+        }//非首节点
+        while (right.next != null) {
+            left = left.next;
+            right = right.next;
+        }
+        left.next = left.next.next;
+        return head;
+    }
+}
+
+3
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+         if (head == null || head.next == null){
+            return head;
+        }
+        ListNode p = head;
+        head = reverseList(p.next);
+        p.next.next = p;
+        p.next = null;
+        return head;
+    }
+}
+
+4
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+             if (l1 == null){
+            if (l2 == null){
+                return null;
+            }else {
+                return l2;
+            }
+        }
+        if (l2==null){
+            return l1;
+        }
+        ListNode head = new ListNode(-1);
+        ListNode cur = head;
+        while (l1!=null && l2!=null){
+            if (l1.val >= l2.val){
+                cur.next = l2;
+                cur = cur.next;
+                l2 = l2.next;
+            }else {
+                cur.next = l1;
+                cur = cur.next;
+                l1 =l1.next;
+            }
+        }
+        while (l1 != null){
+            cur.next = l1;
+            cur = cur.next;
+            l1 = l1.next;
+        }
+        while (l2 != null){
+            cur.next = l2;
+            cur = cur.next;
+            l2 = l2.next;
+        }
+        return head.next;
+
+    }
+}
+
+5
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+         ListNode fast = head;
+		ListNode slow = head;
+		ListNode prev = null;
+		while (fast != null && slow != null) {
+			fast = fast.next == null ? fast.next : fast.next.next;
+			slow = slow.next;
+		}
+		// reverse
+		while (slow != null) {
+			ListNode ovn = slow.next;
+			slow.next = prev;
+			prev = slow;
+			slow = ovn;
+		}
+		// check
+		while (head != null && prev != null) {
+			if (head.val != prev.val) {
+				return false;
+			}
+			head = head.next;
+			prev = prev.next;
+		}
+		return true;
+
+    }
+}
+
+6
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+         if (head == null || head.next == null){
+            return false;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast){
+                return true;
+            }
+        }
+        return false;
+    }
+
+}
+
